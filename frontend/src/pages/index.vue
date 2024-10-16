@@ -25,25 +25,28 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="12" sm="10" md="6">
         <v-card class="bg-primary" :height="350" width="100%" />
       </v-col>
-      <v-col cols="2">
-        <div class="d-flex flex-column ga-5">
+      <v-col cols="12" sm="2" md="2">
+        <div
+          class="d-flex ga-5"
+          :class="display.xs.value ? 'flex-row' : 'flex-column'"
+        >
           <v-card class="bg-info" :height="103" width="100%" />
           <v-card class="bg-info" :height="103" width="100%" />
           <v-card class="bg-info" :height="103" width="100%" />
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="12" sm="12" md="4">
         <v-card class="bg-danger" :height="350" width="100%" />
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" sm="12" md="6">
         <v-card class="bg-danger" :height="350" width="100%" />
       </v-col>
-      <v-col>
+      <v-col cols="12" sm="12" md="6">
         <v-card class="bg-danger" :height="350" width="100%" />
       </v-col>
     </v-row>
@@ -51,6 +54,9 @@
 </template>
 
 <script setup lang="ts">
+import { useDisplay } from "vuetify";
+
+const display = useDisplay();
 const model: Ref<string> = ref("October");
 const dates: Ref<string[]> = ref([
   "January",
