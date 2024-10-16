@@ -51,8 +51,8 @@
 </template>
 
 <script setup lang="ts">
-const model = ref<String | null>("October");
-const dates = ref<String[]>([
+const model: Ref<string> = ref("October");
+const dates: Ref<string[]> = ref([
   "January",
   "February",
   "March",
