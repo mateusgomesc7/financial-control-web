@@ -39,7 +39,9 @@
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="4">
-        <v-card class="bg-danger" :height="350" width="100%" />
+        <v-card class="bg-danger" :height="350" width="100%">
+          <dashboard-income-table />
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
