@@ -30,12 +30,12 @@
       </v-col>
       <v-col cols="12" sm="2" md="2">
         <div
-          class="d-flex ga-5"
+          class="d-flex justify-space-between ga-5 h-100 w-100"
           :class="display.xs.value ? 'flex-row' : 'flex-column'"
         >
-          <v-card class="bg-info" :height="103" width="100%" />
-          <v-card class="bg-info" :height="103" width="100%" />
-          <v-card class="bg-info" :height="103" width="100%" />
+          <dashboard-totals-card title="Income" value="10000" />
+          <dashboard-totals-card title="Expenses" value="5000" />
+          <dashboard-totals-card title="Paid" value="3000" />
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="4" class="mt-md-0 mt-4">
