@@ -38,18 +38,18 @@
           <v-card class="bg-info" :height="103" width="100%" />
         </div>
       </v-col>
-      <v-col cols="12" sm="12" md="4">
-        <v-card class="bg-danger" :height="350" width="100%">
+      <v-col cols="12" sm="12" md="4" class="mt-md-0 mt-4">
+        <dashboard-finance-card title="Monthly Income">
           <dashboard-income-table />
-        </v-card>
+        </dashboard-finance-card>
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="12" md="6">
-        <v-card class="bg-danger" :height="350" width="100%" />
+      <v-col cols="12" sm="12" md="6" class="mt-4">
+        <dashboard-finance-card title="Essential Expenses" />
       </v-col>
-      <v-col cols="12" sm="12" md="6">
-        <v-card class="bg-danger" :height="350" width="100%" />
+      <v-col cols="12" sm="12" md="6" class="mt-4">
+        <dashboard-finance-card title="Non-Essential Expenses" />
       </v-col>
     </v-row>
   </div>
