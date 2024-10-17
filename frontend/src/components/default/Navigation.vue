@@ -4,7 +4,7 @@
       v-model="drawer"
       :expand-on-hover="display.mdAndUp.value"
       :permanent="display.mdAndUp.value || display.lgAndUp.value"
-      :rail="display.mdAndUp.value && !display.xlAndUp.value"
+      :rail="display.mdAndUp.value"
       color="primary"
     >
       <v-list>

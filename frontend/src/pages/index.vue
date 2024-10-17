@@ -46,10 +46,14 @@
     </v-row>
     <v-row>
       <v-col cols="12" sm="12" md="6" class="mt-4">
-        <dashboard-finance-card title="Essential Expenses" />
+        <dashboard-finance-card title="Essential Expenses" height="400">
+          <dashboard-expense-table :expenses="essentialExpensesMock" />
+        </dashboard-finance-card>
       </v-col>
       <v-col cols="12" sm="12" md="6" class="mt-4">
-        <dashboard-finance-card title="Non-Essential Expenses" />
+        <dashboard-finance-card title="Non-Essential Expenses" height="400">
+          <dashboard-expense-table :expenses="nonEssentialExpensesMock" />
+        </dashboard-finance-card>
       </v-col>
     </v-row>
   </div>
@@ -57,6 +61,10 @@
 
 <script setup lang="ts">
 import { useDisplay } from "vuetify";
+import {
+  essentialExpensesMock,
+  nonEssentialExpensesMock,
+} from "@/pages/mocks/expenses";
 
 const display = useDisplay();
 const model: Ref<string> = ref("October");

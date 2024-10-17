@@ -1,5 +1,5 @@
 <template>
-  <v-card class="card-container" width="100%" height="350">
+  <v-card class="card-container" width="100%" :height="props.height">
     <v-card-item>
       <v-card-title
         class="custom-title bg-primary font-weight-bold elevation-2 rounded-lg px-3 py-0"
@@ -19,6 +19,10 @@ const props = defineProps({
   title: {
     type: String,
     required: true,
+  },
+  height: {
+    type: [String, Number],
+    default: 350,
   },
 });
 </script>

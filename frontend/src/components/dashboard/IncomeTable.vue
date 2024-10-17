@@ -1,43 +1,46 @@
 <template>
-  <div class="pa-4">
-    <v-data-table
-      :headers="headers"
-      :items="incomes"
-      item-value="description"
-      items-per-page="-1"
-      height="300"
-      hover
-      hide-default-footer
-      disable-sort
-      class="custom-scroll"
-    />
-  </div>
+  <v-data-table
+    :headers="headers"
+    :items="incomes"
+    items-per-page="-1"
+    height="300"
+    hover
+    hide-default-footer
+    disable-sort
+    class="custom-scroll"
+  />
 </template>
 
 <script setup lang="ts">
-const headers = ref([
-  { title: "Description", key: "description", align: "start" },
-  { title: "Value", key: "value", align: "center" },
-]);
+interface Header {
+  title: string;
+  value: string;
+  align?: "start" | "center" | "end";
+}
+
+const headers: Header[] = [
+  { title: "Income", value: "name", align: "start" },
+  { title: "Amount", value: "value", align: "center" },
+];
 const incomes = ref([
-  { description: "Net salary", value: 3000 },
-  { description: "Net salary", value: 5000 },
-  { description: "Extra income", value: 500 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
-  { description: "Extra income", value: 300 },
+  { name: "Net salary", value: 3000 },
+  { name: "Net salary", value: 5000 },
+  { name: "Extra income", value: 500 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
+  { name: "Extra income", value: 300 },
 ]);
 </script>
 
