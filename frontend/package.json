@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "apexcharts": "^3.54.1",
     "nuxt": "^3.13.0",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "vue3-apexcharts": "^1.7.0"
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.6.0",

@@ -26,7 +26,9 @@
     </v-row>
     <v-row>
       <v-col cols="12" sm="10" md="6">
-        <v-card class="bg-primary" :height="350" width="100%" />
+        <v-card class="bg-primary" :height="350" width="100%">
+          <DashboardLineChart />
+        </v-card>
       </v-col>
       <v-col cols="12" sm="2" md="2">
         <div
