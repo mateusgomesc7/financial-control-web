@@ -1,24 +1,38 @@
 <template>
-  <apexchart
-    type="line"
-    :options="chartOptions"
-    :series="series"
-    :height="props.height"
-    :width="props.width"
-  />
+  <div class="position-relative pt-3">
+    <v-select
+      v-model="value"
+      :items="itens"
+      class="position-absolute"
+      variant="underlined"
+      density="compact"
+      max-width="150"
+      hide-details
+    />
+    <apexchart
+      type="line"
+      :options="chartOptions"
+      :series="series"
+      :height="props.height"
+      :width="props.width"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
   height: {
     type: [String, Number],
-    default: "100%",
+    default: "275",
   },
   width: {
     type: [String, Number],
     default: "100%",
   },
 });
+
+const itens = ["California", "Colorado", "Florida", "Georgia", "Texas", "Wyoming"];
+const value = ref("Colorado");
 
 const chartOptions = {
   chart: {
@@ -41,7 +55,20 @@ const chartOptions = {
     theme: "dark",
   },
   xaxis: {
-    categories: ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"],
+    categories: [
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "may",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "oct",
+      "nov",
+      "dec",
+    ],
     labels: {
       style: {
         colors: "#ffffff",
@@ -63,3 +90,15 @@ const series = [
   },
 ];
 </script>
+
+<style scoped>
+.v-select {
+  top: 0;
+  right: 20px;
+  z-index: 1;
+}
+
+:deep(.v-select__selection-text) {
+  font-size: 12px !important;
+}
+</style>
