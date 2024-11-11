@@ -11,7 +11,7 @@
         <v-list-item
           prepend-icon="mdi-account"
           title="Mateus Gomes"
-          subtitle="Profile"
+          subtitle="Perfil"
         />
       </v-list>
       <v-divider />
@@ -26,8 +26,8 @@
           title="Register"
           value="register"
         >
-          <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props" title="Register"></v-list-item>
+          <template #activator="{ props }">
+            <v-list-item v-bind="props" title="Registrar"/>
           </template>
 
           <v-list-item
@@ -36,7 +36,7 @@
             prepend-icon="mdi-circle-small"
             :title="title"
             :value="title"
-          ></v-list-item>
+          />
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
@@ -59,9 +59,9 @@ import { useDisplay } from "vuetify";
 const display = useDisplay();
 const drawer: Ref<boolean> = ref(display.mdAndUp.value);
 const registers = [
-  ["Monthly Income"],
-  ["Essential Expenses"],
-  ["Non-Essential Expenses"],
+  ["Renda Mensal"],
+  ["Despesas Essenciais"],
+  ["Despesas Não Essenciais"],
 ];
 </script>
 

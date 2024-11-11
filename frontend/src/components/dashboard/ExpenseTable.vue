@@ -7,6 +7,7 @@
     hover
     hide-default-footer
     disable-sort
+    fixed-header
     class="custom-scroll"
   />
 </template>
@@ -35,9 +36,9 @@ const props = defineProps({
 });
 
 const headers: Header[] = [
-  { title: "Expense", value: "name", align: "start" },
-  { title: "Expected", value: "expected_value", align: "center" },
-  { title: "Paid", value: "paid_value", align: "center" },
+  { title: "Despesa", value: "name", align: "start" },
+  { title: "Esperado", value: "expected_value", align: "center" },
+  { title: "Pago", value: "paid_value", align: "center" },
 ];
 </script>
 
@@ -56,6 +57,7 @@ const headers: Header[] = [
 }
 .custom-scroll:deep(.v-table__wrapper)::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 .custom-scroll:deep(.v-table__wrapper)::-webkit-scrollbar-thumb {
   background-color: rgb(var(--v-theme-primary));

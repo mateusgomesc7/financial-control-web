@@ -36,25 +36,25 @@
           class="d-flex justify-space-between ga-5 h-100 w-100"
           :class="display.xs.value ? 'flex-row' : 'flex-column'"
         >
-          <dashboard-totals-card title="Income" value="10000" />
-          <dashboard-totals-card title="Expenses" value="5000" />
-          <dashboard-totals-card title="Paid" value="3000" />
+          <dashboard-totals-card title="Renda" value="10000" />
+          <dashboard-totals-card title="Despesas" value="5000" />
+          <dashboard-totals-card title="Pago" value="3000" />
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="4" class="mt-md-0 mt-4">
-        <dashboard-finance-card title="Monthly Income">
+        <dashboard-finance-card title="Renda Mensal">
           <dashboard-income-table />
         </dashboard-finance-card>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12" sm="12" md="6" class="mt-4">
-        <dashboard-finance-card title="Essential Expenses" height="400">
+        <dashboard-finance-card title="Despesas Essenciais" height="400">
           <dashboard-expense-table :expenses="essentialExpensesMock" />
         </dashboard-finance-card>
       </v-col>
       <v-col cols="12" sm="12" md="6" class="mt-4">
-        <dashboard-finance-card title="Non-Essential Expenses" height="400">
+        <dashboard-finance-card title="Despesas Não Essenciais" height="400">
           <dashboard-expense-table :expenses="nonEssentialExpensesMock" />
         </dashboard-finance-card>
       </v-col>
@@ -70,20 +70,20 @@ import {
 } from "@/pages/mocks/expenses";
 
 const display = useDisplay();
-const model: Ref<string> = ref("October");
+const model: Ref<string> = ref("Outubro");
 const dates: Ref<string[]> = ref([
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
 ]);
 </script>
 

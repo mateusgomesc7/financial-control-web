@@ -31,8 +31,8 @@ const props = defineProps({
   },
 });
 
-const itens = ["California", "Colorado", "Florida", "Georgia", "Texas", "Wyoming"];
-const value = ref("Colorado");
+const itens = ["Ganho", "Pago", "Esperado"];
+const value = ref("Ganho");
 
 const chartOptions = {
   chart: {

@@ -7,6 +7,7 @@
     hover
     hide-default-footer
     disable-sort
+    fixed-header
     class="custom-scroll"
   />
 </template>
@@ -19,28 +20,17 @@ interface Header {
 }
 
 const headers: Header[] = [
-  { title: "Income", value: "name", align: "start" },
-  { title: "Amount", value: "value", align: "center" },
+  { title: "Renda", value: "name", align: "start" },
+  { title: "Valor", value: "value", align: "center" },
 ];
 const incomes = ref([
-  { name: "Net salary", value: 3000 },
-  { name: "Net salary", value: 5000 },
-  { name: "Extra income", value: 500 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
-  { name: "Extra income", value: 300 },
+  { name: "Salário Líquido", value: 3000 },
+  { name: "Salário Líquido", value: 5000 },
+  { name: "Renda Extra", value: 500 },
+  { name: "Renda Extra", value: 300 },
+  { name: "Renda Extra", value: 300 },
+  { name: "Renda Extra", value: 300 },
+  { name: "Renda Extra", value: 300 }
 ]);
 </script>
 
