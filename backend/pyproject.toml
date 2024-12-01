@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = ["Mateus Gomes <mateusgomes.dev@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.*"
+fastapi = {extras = ["standard"], version = "^0.115.5"}
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+isort = "^5.13.2"
+blue = "^0.9.1"
+pylint = "^3.3.1"
+
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[tool.blue]
+line-length = 79
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
