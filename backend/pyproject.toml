@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "backend"
+name = "Financial Control API"
 version = "0.1.0"
 description = ""
 authors = ["Mateus Gomes <mateusgomes.dev@gmail.com>"]
@@ -7,15 +7,18 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "3.12.*"
-fastapi = {extras = ["standard"], version = "^0.115.5"}
+fastapi = { extras = ["standard"], version = "^0.115.5" }
+sqlalchemy = "^2.0.36"
+pydantic-settings = "^2.6.1"
+alembic = "^1.14.0"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
 pytest-cov = "^6.0.0"
 isort = "^5.13.2"
-blue = "^0.9.1"
 pylint = "^3.3.1"
+black = "^24.10.0"
 
 
 [tool.pytest.ini_options]
@@ -25,9 +28,15 @@ addopts = '-p no:warnings'
 [tool.isort]
 profile = "black"
 line_length = 79
+skip = ["migrations"]
 
-[tool.blue]
+[tool.black]
 line-length = 79
+exclude = "/migrations/"
+
+[tool.pylint]
+ignore = ["migrations"]
+
 
 [build-system]
 requires = ["poetry-core"]
