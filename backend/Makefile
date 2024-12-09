@@ -23,5 +23,5 @@ post_test:
 	coverage html
 
 test:
-	pytest -s -x --cov=$(SRC_DIR) -vv
+	pytest -s --cov=$(SRC_DIR) -vv
 	make post_test
