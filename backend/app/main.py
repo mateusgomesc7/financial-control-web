@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 
 from app.routers import auth, users
-from app.schemas import Message
+from app.schemas.utils import Message
 
 app = FastAPI()
 
