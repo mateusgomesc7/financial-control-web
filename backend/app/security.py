@@ -4,14 +4,14 @@ from zoneinfo import ZoneInfo
 
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from jwt import DecodeError, decode, encode
+from jwt import decode, encode
+from jwt.exceptions import ExpiredSignatureError, PyJWTError
 from pwdlib import PasswordHash
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_session
 from app.models import User
-from app.schemas import TokenData
 from app.settings import Settings
 
 pwd_context = PasswordHash.recommended()
@@ -54,17 +54,19 @@ def get_current_user(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
         username: str = payload.get("sub")
+
         if not username:
             raise credentials_exception
-        token_data = TokenData(username=username)
-    except DecodeError:
+
+    except ExpiredSignatureError:
         raise credentials_exception
 
-    user = session.scalar(
-        select(User).where(User.email == token_data.username)
-    )
-
-    if not user:
+    except PyJWTError:
         raise credentials_exception
 
-    return user
+    user_db = session.scalar(select(User).where(User.username == username))
+
+    if not user_db:
+        raise credentials_exception
+
+    return user_db

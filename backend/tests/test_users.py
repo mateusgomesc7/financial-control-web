@@ -48,12 +48,13 @@ def test_update_user(client, user, token):
             "password": "mynewpassword",
         },
     )
+
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {
+        "id": user.id,
         "name": "test",
         "username": "test",
         "email": "test@example.com",
-        "id": user.id,
     }
 
 
@@ -65,3 +66,13 @@ def test_delete_user(client, user, token):
 
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {"message": "User deleted"}
+
+
+def test_delete_user_not_permissions(client, other_user, token):
+    response = client.delete(
+        f"/users/{other_user.id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert response.json() == {"detail": "Not enough permissions"}
