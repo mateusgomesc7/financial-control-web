@@ -27,18 +27,31 @@ class User:
         init=False, server_default=now(), onupdate=now()
     )
 
-    members: Mapped[list["Member"]] = relationship(
-        "Member", back_populates="user", cascade="all, delete-orphan"
-    )
     user_incomes: Mapped[list["UserIncome"]] = relationship(
-        "UserIncome", back_populates="user"
+        "UserIncome",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        init=False,
     )
     user_essential_expenses: Mapped[list["UserEssentialExpense"]] = (
-        relationship("UserEssentialExpense", back_populates="user")
+        relationship(
+            "UserEssentialExpense",
+            back_populates="user",
+            cascade="all, delete-orphan",
+            init=False,
+        )
     )
     user_non_essential_expenses: Mapped[list["UserNonEssentialExpense"]] = (
-        relationship("UserNonEssentialExpense", back_populates="user")
+        relationship(
+            "UserNonEssentialExpense",
+            back_populates="user",
+            cascade="all, delete-orphan",
+            init=False,
+        )
     )
     user_months: Mapped[list["UserMonth"]] = relationship(
-        "UserMonth", back_populates="user"
+        "UserMonth",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        init=False,
     )

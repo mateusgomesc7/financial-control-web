@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import DECIMAL, String, ForeignKey
+from sqlalchemy import DECIMAL, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql.functions import now
 
@@ -28,7 +28,6 @@ class Income:
         init=False, server_default=now(), onupdate=now()
     )
 
-    member: Mapped["Member"] = relationship("Member", back_populates="incomes")
     user_incomes: Mapped[list["UserIncome"]] = relationship(
         "UserIncome", back_populates="income"
     )

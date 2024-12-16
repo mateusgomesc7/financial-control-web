@@ -2,8 +2,8 @@
 
 from datetime import datetime
 
-from sqlalchemy import String, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql.functions import now
 
 from app.models.base import table_registry
@@ -23,27 +23,4 @@ class Member:
     )
     updated_at: Mapped[datetime] = mapped_column(
         init=False, server_default=now(), onupdate=now()
-    )
-
-    user: Mapped["User"] = relationship("User", back_populates="members")
-
-    incomes: Mapped[list["Income"]] = relationship(
-        "Income",
-        back_populates="member",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
-
-    essential_expenses: Mapped[list["EssentialExpense"]] = relationship(
-        "EssentialExpense",
-        back_populates="member",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
-
-    non_essential_expenses: Mapped[list["NonEssentialExpense"]] = relationship(
-        "NonEssentialExpense",
-        back_populates="member",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
     )

@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import DECIMAL, String, ForeignKey
+from sqlalchemy import DECIMAL, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql.functions import now
 
@@ -28,9 +28,6 @@ class NonEssentialExpense:
         init=False, server_default=now(), onupdate=now()
     )
 
-    member: Mapped["Member"] = relationship(
-        "Member", back_populates="non_essential_expenses"
-    )
     user_non_essential_expenses: Mapped[list["UserNonEssentialExpense"]] = (
         relationship(
             "UserNonEssentialExpense", back_populates="non_essential_expense"

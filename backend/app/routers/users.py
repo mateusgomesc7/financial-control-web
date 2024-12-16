@@ -1,3 +1,5 @@
+"""Users routes."""
+
 from http import HTTPStatus
 from typing import Annotated
 

@@ -13,6 +13,7 @@ class UserPublic(BaseModel):
     name: str
     username: str
     email: EmailStr
+
     model_config = ConfigDict(from_attributes=True)
 
 

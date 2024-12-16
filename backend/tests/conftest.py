@@ -11,6 +11,7 @@ from testcontainers.postgres import PostgresContainer
 from app.database import get_session
 from app.main import app
 from app.models.base import table_registry
+from app.models.member import Member
 from app.models.user import User
 from app.security import get_password_hash
 
@@ -23,6 +24,14 @@ class UserFactory(factory.Factory):
     username = factory.Sequence(lambda n: f"test{n}")
     email = factory.LazyAttribute(lambda obj: f"{obj.username}@test.com")
     password = factory.LazyAttribute(lambda obj: f"{obj.username}+password")
+
+
+class MemberFactory(factory.Factory):
+    class Meta:
+        model = Member
+
+    name = factory.Sequence(lambda n: f"Test Member {n}")
+    id_user_fk = 1
 
 
 @pytest.fixture(scope="session")
@@ -110,3 +119,23 @@ def token(client, user):
         data={"username": user.username, "password": user.clean_password},
     )
     return response.json()["access_token"]
+
+
+@pytest.fixture
+def member(session, user):
+    member = MemberFactory(id_user_fk=user.id)
+    session.add(member)
+    session.commit()
+    session.refresh(member)
+
+    return member
+
+
+@pytest.fixture
+def other_member(session, other_user):
+    member = MemberFactory(id_user_fk=other_user.id)
+    session.add(member)
+    session.commit()
+    session.refresh(member)
+
+    return member

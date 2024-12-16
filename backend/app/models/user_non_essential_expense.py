@@ -23,7 +23,7 @@ class UserNonEssentialExpense:
     paid: Mapped[float] = mapped_column(DECIMAL(10, 2))
 
     user: Mapped["User"] = relationship(
-        "User", back_populates="user_essential_expenses"
+        "User", back_populates="user_non_essential_expenses"
     )
     non_essential_expense: Mapped["NonEssentialExpense"] = relationship(
         "NonEssentialExpense", back_populates="user_non_essential_expenses"

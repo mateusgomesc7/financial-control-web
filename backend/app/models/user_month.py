@@ -2,6 +2,7 @@
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.models.base import table_registry
 
 
@@ -18,5 +19,7 @@ class UserMonth:
         ForeignKey("month.id"), primary_key=True
     )
 
-    user: Mapped["User"] = relationship("User", back_populates="months")
-    month: Mapped["Month"] = relationship("Month", back_populates="users")
+    user: Mapped["User"] = relationship("User", back_populates="user_months")
+    month: Mapped["Month"] = relationship(
+        "Month", back_populates="user_months"
+    )
