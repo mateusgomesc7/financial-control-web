@@ -1,14 +1,14 @@
 <template>
   <div>
     <IncomesFormModal v-model="incomeDialog" :income-id="incomeId" />
-    <h1>Receita Mensal</h1>
+    <h1>Renda Mensal</h1>
     <v-card class="pa-4">
       <v-card-title class="d-flex justify-space-between">
         <v-text-field
           :loading="loading"
           append-inner-icon="mdi-magnify"
           density="compact"
-          label="Pesquisar receita"
+          label="Pesquisar renda"
           variant="outlined"
           max-width="400"
           hide-details

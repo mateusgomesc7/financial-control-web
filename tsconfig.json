@@ -3,7 +3,10 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "#app": [
+        "./node_modules/nuxt/dist/app/index"
+      ]
     }
   }
 }

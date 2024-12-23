@@ -1,5 +1,7 @@
 {
-  "name": "nuxt-app",
+  "name": "financial-control",
+  "version": "0.0.0",
+  "description": "Controle Financeiro",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,8 +15,13 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@pinia/nuxt": "^0.9.0",
     "apexcharts": "^3.54.1",
+    "jwt-decode": "^4.0.0",
     "nuxt": "^3.13.0",
+    "pinia": "^2.3.0",
+    "pinia-plugin-persistedstate": "^4.2.0",
+    "pinia-shared-state": "^0.5.1",
     "vue": "latest",
     "vue-router": "latest",
     "vue3-apexcharts": "^1.7.0"
