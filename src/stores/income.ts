@@ -1,6 +1,6 @@
 import type { Income } from "@/interfaces/income";
 
-export const useTypesStore = defineStore("types", () => {
+export const useIncomesStore = defineStore("incomes", () => {
   const { $api } = useNuxtApp();
 
   const incomes = ref<Income[]>([]);
@@ -8,10 +8,9 @@ export const useTypesStore = defineStore("types", () => {
 
   const getAllIncomes = async (): Promise<void> => {
     loading.value = true;
-    const params = { order_by: "id", order_desc: "false" };
     try {
-      const response = await $api.type.getAll(params);
-      if (response) incomes.value = response;
+      const response = await $api.income.getAll();
+      if (response) incomes.value = response.incomes;
     } finally {
       loading.value = false;
     }

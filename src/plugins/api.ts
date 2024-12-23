@@ -9,24 +9,24 @@ export default defineNuxtPlugin(() => {
 
   const fetchOptions: FetchOptions = {
     baseURL: config.public.apiBaseUrl,
-    // onRequest({ options }) {
-    //   if ($router.currentRoute.value.path === "/login") {
-    //     return;
-    //   }
+    onRequest({ options }) {
+      // if ($router.currentRoute.value.path === "/login") {
+      //   return;
+      // }
 
-    //   if (!useAuthStore().validateToken()) {
-    //     $router.push("/login");
-    //     throw new Error($i18n.t("utils.token_error"));
-    //   }
+      // if (!useAuthStore().validateToken()) {
+      //   $router.push("/login");
+      //   throw new Error($i18n.t("utils.token_error"));
+      // }
 
-    //   const token = useAuthStore().token;
-    //   if (token) {
-    //     options.headers = {
-    //       ...options.headers,
-    //       Authorization: `Bearer ${token}`,
-    //     };
-    //   }
-    // },
+      const token = useAuthStore().token;
+      if (token) {
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${token}`,
+        };
+      }
+    },
   };
 
   const apiFecther = $fetch.create(fetchOptions);

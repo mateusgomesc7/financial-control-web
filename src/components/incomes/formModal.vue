@@ -52,7 +52,9 @@ const nameRules = ref([
 ]);
 
 const dialog = computed({
-  get: () => props.dialogShow,
+  get: () => {
+    return props.dialogShow;
+  },
   set: (value) => {
     emits("update:modelValue", value);
   },
