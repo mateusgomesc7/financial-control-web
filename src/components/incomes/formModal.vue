@@ -90,7 +90,6 @@ watch(
 watch(
   () => props.incomeId,
   (newVal) => {
-    console.log(newVal);
     if (newVal) {
       dialogTitle.value = "Editar renda";
       loadIncome();
