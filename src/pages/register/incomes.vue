@@ -5,7 +5,15 @@
       :income-id="incomeId"
       @update:show="incomeDialog = false"
     />
-    <h1>Renda Mensal</h1>
+    <UtilsConfirmationModal
+      :dialog-show="deleteDialog"
+      type="error"
+      title="Deletar Renda"
+      question="Tem certeza que deseja deletar essa renda?"
+      @update:show="deleteDialog = false"
+      @yes="deleteIncome(incomeId)"
+    />
+    <h1 class="mb-4 text-primary">Renda Mensal</h1>
     <v-card class="pa-4">
       <v-card-title class="d-flex justify-space-between">
         <v-text-field
@@ -44,7 +52,7 @@
             >
               mdi-pencil
             </v-icon>
-            <v-icon color="error" size="20" @click="deleteIncome(item.id)">
+            <v-icon color="error" size="20" @click="openDeleteDialog(item.id)">
               mdi-delete
             </v-icon>
           </template>
@@ -59,6 +67,7 @@ const incomesStore = useIncomesStore();
 const loaded = ref(false);
 const loading = ref(false);
 const incomeDialog = ref(false);
+const deleteDialog = ref(false);
 const incomeId = ref<number | null>(null);
 
 const headers = ref([
@@ -87,11 +96,19 @@ const openDialog = (id: number | null = null) => {
   incomeDialog.value = true;
 };
 
+const openDeleteDialog = (id: number) => {
+  incomeId.value = id;
+  deleteDialog.value = true;
+};
+
 const loadIncomes = async () => {
   await incomesStore.getAllIncomes();
 };
 
-const deleteIncome = async (id: number) => {
+const deleteIncome = async (id: number | null) => {
+  if (!id) return;
+
   await incomesStore.deleteIncome(id);
+  incomeId.value = null;
 };
 </script>

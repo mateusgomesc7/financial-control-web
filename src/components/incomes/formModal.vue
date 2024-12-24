@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["update:show", "save"]);
+const emit = defineEmits(["update:show"]);
 const props = defineProps({
   dialogShow: {
     type: Boolean,
@@ -83,21 +83,14 @@ watch(
   (newVal) => {
     if (newVal) {
       loadMembers();
+      if (props.incomeId) {
+        dialogTitle.value = "Editar renda";
+        loadIncome();
+      } else {
+        dialogTitle.value = "Adicionar renda";
+      }
     }
   }
-);
-
-watch(
-  () => props.incomeId,
-  (newVal) => {
-    if (newVal) {
-      dialogTitle.value = "Editar renda";
-      loadIncome();
-    } else {
-      dialogTitle.value = "Adicionar renda";
-    }
-  },
-  { immediate: true }
 );
 
 const handleSave = async () => {
@@ -109,11 +102,9 @@ const handleSave = async () => {
       id_member_fk: members.value,
     };
     if (props.incomeId) {
-      const reponse = await incomesStore.updateIncome(props.incomeId, payload);
-      emit("save", reponse);
+      await incomesStore.updateIncome(props.incomeId, payload);
     } else {
-      const reponse = await incomesStore.createIncome(payload);
-      emit("save", reponse);
+      await incomesStore.createIncome(payload);
     }
     handleClose();
   }

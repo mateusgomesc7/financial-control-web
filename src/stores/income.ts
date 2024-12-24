@@ -34,7 +34,11 @@ export const useIncomesStore = defineStore("incomes", () => {
     loadingForm.value = true;
     try {
       const response = await $api.income.create(data);
-      return response ?? undefined;
+      if (response) {
+        incomes.value.unshift(response);
+        return response;
+      }
+      return undefined;
     } finally {
       loadingForm.value = false;
     }
@@ -47,7 +51,12 @@ export const useIncomesStore = defineStore("incomes", () => {
     loadingForm.value = true;
     try {
       const response = await $api.income.update(id, data);
-      return response ?? undefined;
+      if (response) {
+        const index = incomes.value.findIndex((i) => i.id === id);
+        if (index !== -1) incomes.value[index] = response;
+        return response;
+      }
+      return undefined;
     } finally {
       loadingForm.value = false;
     }
@@ -56,7 +65,8 @@ export const useIncomesStore = defineStore("incomes", () => {
   const deleteIncome = async (id: number): Promise<void> => {
     loadingForm.value = true;
     try {
-      await $api.income.delete(id);
+      const response = await $api.income.delete(id);
+      if (response) incomes.value = incomes.value.filter((i) => i.id !== id);
     } finally {
       loadingForm.value = false;
     }

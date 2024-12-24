@@ -1,6 +1,6 @@
 <template>
   <v-layout class="bg-secondary">
-    <default-navigation />
+    <layout-default-navigation />
 
     <v-main>
       <v-container>
