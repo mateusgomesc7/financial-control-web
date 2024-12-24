@@ -7,3 +7,9 @@ export interface Income {
   created_at: string;
   updated_at: string;
 }
+
+export interface IncomeSimple {
+  name: string;
+  amount: number;
+  id_member_fk: number;
+}

@@ -2,6 +2,7 @@ import { $fetch, type FetchOptions } from "ofetch";
 import type { ApiInstance } from "@/interfaces/api-instance";
 import IncomeService from "@/services/income";
 import AuthService from "@/services/auth";
+import MemberService from "@/services/member";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
@@ -34,6 +35,7 @@ export default defineNuxtPlugin(() => {
   const services: ApiInstance = {
     auth: new AuthService(apiFecther),
     income: new IncomeService(apiFecther),
+    member: new MemberService(apiFecther),
   };
 
   return {

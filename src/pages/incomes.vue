@@ -1,6 +1,10 @@
 <template>
   <div>
-    <IncomesFormModal v-model="incomeDialog" :income-id="incomeId" />
+    <IncomesFormModal
+      :dialog-show="incomeDialog"
+      :income-id="incomeId"
+      @update:show="incomeDialog = false"
+    />
     <h1>Renda Mensal</h1>
     <v-card class="pa-4">
       <v-card-title class="d-flex justify-space-between">
@@ -28,7 +32,7 @@
         <v-data-table-server
           :headers="headers"
           :items="incomesStore.incomes"
-          :loading="incomesStore.loading"
+          :loading="incomesStore.loadingAll"
           disable-sort
         >
           <template #[`item.actions`]="{ item }">
@@ -40,7 +44,9 @@
             >
               mdi-pencil
             </v-icon>
-            <v-icon color="error" size="20">mdi-delete</v-icon>
+            <v-icon color="error" size="20" @click="deleteIncome(item.id)">
+              mdi-delete
+            </v-icon>
           </template>
         </v-data-table-server>
       </v-card-text>
@@ -83,5 +89,9 @@ const openDialog = (id: number | null = null) => {
 
 const loadIncomes = async () => {
   await incomesStore.getAllIncomes();
+};
+
+const deleteIncome = async (id: number) => {
+  await incomesStore.deleteIncome(id);
 };
 </script>

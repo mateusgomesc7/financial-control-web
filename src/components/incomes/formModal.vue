@@ -1,14 +1,36 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500" persistent>
-    <v-card :title="dialogTitle">
+  <v-dialog
+    :model-value="props.dialogShow"
+    max-width="500"
+    persistent
+    @update:model-value="handleClose"
+  >
+    <v-card :title="dialogTitle" :loading="incomesStore.loadingById">
       <v-card-text>
         <v-form ref="form">
           <v-text-field
             v-model="name"
-            :counter="10"
             :rules="nameRules"
-            label="Nome"
+            label="Nome*"
+            variant="outlined"
             required
+          />
+          <v-text-field
+            v-model="amount"
+            :rules="amountRules"
+            label="Receita*"
+            type="number"
+            variant="outlined"
+            required
+          />
+          <v-autocomplete
+            v-model="members"
+            :loading="membersStore.loading"
+            :items="membersStore.members"
+            label="Membros"
+            variant="outlined"
+            item-title="name"
+            item-value="id"
           />
         </v-form>
       </v-card-text>
@@ -16,7 +38,7 @@
       <v-card-actions>
         <v-spacer />
 
-        <v-btn text="Cancelar" variant="plain" @click="handleCancel" />
+        <v-btn text="Cancelar" variant="plain" @click="handleClose" />
 
         <v-btn
           color="primary"
@@ -30,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-const emits = defineEmits(["update:modelValue", "save"]);
+const emit = defineEmits(["update:show", "save"]);
 const props = defineProps({
   dialogShow: {
     type: Boolean,
@@ -41,35 +63,39 @@ const props = defineProps({
     default: null,
   },
 });
+const membersStore = useMemberStore();
+const incomesStore = useIncomesStore();
 
 const form = ref();
 const dialogTitle = ref("");
 const name = ref("");
+const amount = ref(0);
+const members = ref();
 const nameRules = ref([
   (name: string) => !!name || "Name is required",
   (name: string) =>
     (name && name.length <= 10) || "Name must be 10 characters or less",
 ]);
+const amountRules = ref([(amount: number) => !!amount || "Amount is required"]);
 
-const dialog = computed({
-  get: () => {
-    return props.dialogShow;
-  },
-  set: (value) => {
-    emits("update:modelValue", value);
-  },
-});
+watch(
+  () => props.dialogShow,
+  (newVal) => {
+    if (newVal) {
+      loadMembers();
+    }
+  }
+);
 
 watch(
   () => props.incomeId,
   (newVal) => {
     console.log(newVal);
     if (newVal) {
-      dialogTitle.value = "Edit income";
-      name.value = "Income name";
+      dialogTitle.value = "Editar renda";
+      loadIncome();
     } else {
-      dialogTitle.value = "Add income";
-      name.value = "";
+      dialogTitle.value = "Adicionar renda";
     }
   },
   { immediate: true }
@@ -78,12 +104,44 @@ watch(
 const handleSave = async () => {
   const isValid = await form.value.validate();
   if (isValid.valid) {
-    emits("save", name.value);
-    dialog.value = false;
+    const payload = {
+      name: name.value,
+      amount: amount.value,
+      id_member_fk: members.value,
+    };
+    if (props.incomeId) {
+      const reponse = await incomesStore.updateIncome(props.incomeId, payload);
+      emit("save", reponse);
+    } else {
+      const reponse = await incomesStore.createIncome(payload);
+      emit("save", reponse);
+    }
+    handleClose();
   }
 };
 
-const handleCancel = () => {
-  dialog.value = false;
+const handleClose = () => {
+  clearForm();
+  emit("update:show", false);
+};
+
+const clearForm = () => {
+  name.value = "";
+  amount.value = 0;
+  members.value = null;
+  form.value.reset();
+};
+
+const loadMembers = async () => {
+  await membersStore.getAllMembers();
+};
+
+const loadIncome = async () => {
+  const income = await incomesStore.getIncomeById(props.incomeId);
+  if (!income) return;
+
+  name.value = income.name;
+  amount.value = income.amount;
+  members.value = income.id_member_fk;
 };
 </script>
