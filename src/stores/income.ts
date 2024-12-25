@@ -1,24 +1,34 @@
-import type { Income, IncomeSimple } from "@/interfaces/income";
+import type {
+  Income,
+  IncomeSimple,
+  IncomesPaginated,
+} from "@/interfaces/income";
 
 export const useIncomesStore = defineStore("incomes", () => {
   const { $api } = useNuxtApp();
 
-  const incomes = ref<Income[]>([]);
+  const incomes = ref<IncomesPaginated>({ items: [], pagination: {} });
   const loadingAll = ref(false);
   const loadingById = ref(false);
   const loadingForm = ref(false);
 
-  const getAllIncomes = async (): Promise<void> => {
+  const getAllIncomes = async ({
+    page = 1,
+    itemsPerPage = 10,
+  } = {}): Promise<void> => {
     loadingAll.value = true;
     try {
-      const response = await $api.income.getAll();
-      if (response) incomes.value = response.incomes;
+      const params = { page, per_page: itemsPerPage };
+      const response = await $api.income.getAll(params);
+      if (response) incomes.value = response;
     } finally {
       loadingAll.value = false;
     }
   };
 
-  const getIncomeById = async (id: number): Promise<Income | undefined> => {
+  const getIncomeById = async (
+    id: number
+  ): Promise<IncomeSimple | undefined> => {
     loadingById.value = true;
     try {
       const response = await $api.income.getById(id);
@@ -35,7 +45,10 @@ export const useIncomesStore = defineStore("incomes", () => {
     try {
       const response = await $api.income.create(data);
       if (response) {
-        incomes.value.unshift(response);
+        incomes.value.items.unshift(response);
+        incomes.value.pagination.total =
+          (incomes.value.pagination.total ?? 0) + 1;
+        incomes.value.items = incomes.value.items.slice(0, 10);
         return response;
       }
       return undefined;
@@ -52,8 +65,8 @@ export const useIncomesStore = defineStore("incomes", () => {
     try {
       const response = await $api.income.update(id, data);
       if (response) {
-        const index = incomes.value.findIndex((i) => i.id === id);
-        if (index !== -1) incomes.value[index] = response;
+        const index = incomes.value.items.findIndex((i) => i.id === id);
+        if (index !== -1) incomes.value.items[index] = response;
         return response;
       }
       return undefined;
@@ -66,7 +79,8 @@ export const useIncomesStore = defineStore("incomes", () => {
     loadingForm.value = true;
     try {
       const response = await $api.income.delete(id);
-      if (response) incomes.value = incomes.value.filter((i) => i.id !== id);
+      if (response)
+        incomes.value.items = incomes.value.items.filter((i) => i.id !== id);
     } finally {
       loadingForm.value = false;
     }

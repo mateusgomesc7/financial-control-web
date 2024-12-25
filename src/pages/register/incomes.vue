@@ -38,11 +38,17 @@
       </v-card-title>
       <v-card-text>
         <v-data-table-server
+          v-model:items-per-page="incomesStore.incomes.pagination.per_page"
           :headers="headers"
-          :items="incomesStore.incomes"
+          :items="incomesStore.incomes.items"
+          :items-length="incomesStore.incomes.pagination.total ?? 0"
           :loading="incomesStore.loadingAll"
           disable-sort
+          @update:options="incomesStore.getAllIncomes"
         >
+          <template #[`item.member`]="{ item }">
+            {{ item.member.name }}
+          </template>
           <template #[`item.actions`]="{ item }">
             <v-icon
               class="mr-2"
@@ -71,17 +77,13 @@ const deleteDialog = ref(false);
 const incomeId = ref<number | null>(null);
 
 const headers = ref([
-  { title: "Nome", key: "name", align: "start" },
-  { title: "Receita", key: "amount", align: "end" },
-  { title: "Membro", key: "id_member_fk", align: "start" },
-  { title: "Criação", key: "created_at", align: "start" },
-  { title: "Atualização", key: "updated_at", align: "start" },
-  { title: "Actions", key: "actions", align: "center" },
+  { title: "Nome", key: "name", align: "start", sortable: false },
+  { title: "Receita", key: "amount", align: "end", sortable: false },
+  { title: "Membro", key: "member", align: "start", sortable: false },
+  { title: "Criação", key: "created_at", align: "start", sortable: false },
+  { title: "Atualização", key: "updated_at", align: "start", sortable: false },
+  { title: "Actions", key: "actions", align: "center", sortable: false },
 ]);
-
-onMounted(() => {
-  loadIncomes();
-});
 
 function onClick() {
   loading.value = true;
@@ -99,10 +101,6 @@ const openDialog = (id: number | null = null) => {
 const openDeleteDialog = (id: number) => {
   incomeId.value = id;
   deleteDialog.value = true;
-};
-
-const loadIncomes = async () => {
-  await incomesStore.getAllIncomes();
 };
 
 const deleteIncome = async (id: number | null) => {

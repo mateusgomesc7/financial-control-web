@@ -30,4 +30,13 @@ export default class BaseService {
       console.error(error);
     }
   }
+
+  protected getQueryParams(params: Record<string, string | number>): string {
+    return new URLSearchParams(
+      Object.entries(params).reduce((acc, [key, value]) => {
+        acc[key] = String(value);
+        return acc;
+      }, {} as Record<string, string>)
+    ).toString();
+  }
 }
