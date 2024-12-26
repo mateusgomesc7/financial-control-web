@@ -17,15 +17,15 @@
     <v-card class="pa-4">
       <v-card-title class="d-flex justify-space-between">
         <v-text-field
-          :loading="loading"
+          v-model="incomesStore.nameSearch"
           append-inner-icon="mdi-magnify"
           density="compact"
           label="Pesquisar renda"
           variant="outlined"
           max-width="400"
+          clearable
           hide-details
           single-line
-          @click:append-inner="onClick"
         />
         <v-btn
           prepend-icon="mdi-plus"
@@ -43,6 +43,7 @@
           :items="incomesStore.incomes.items"
           :items-length="incomesStore.incomes.pagination.total ?? 0"
           :loading="incomesStore.loadingAll"
+          :search="incomesStore.search"
           disable-sort
           @update:options="incomesStore.getAllIncomes"
         >
@@ -70,8 +71,6 @@
 
 <script setup lang="ts">
 const incomesStore = useIncomesStore();
-const loaded = ref(false);
-const loading = ref(false);
 const incomeDialog = ref(false);
 const deleteDialog = ref(false);
 const incomeId = ref<number | null>(null);
@@ -84,14 +83,6 @@ const headers = ref([
   { title: "Atualização", key: "updated_at", align: "start", sortable: false },
   { title: "Actions", key: "actions", align: "center", sortable: false },
 ]);
-
-function onClick() {
-  loading.value = true;
-  setTimeout(() => {
-    loading.value = false;
-    loaded.value = true;
-  }, 2000);
-}
 
 const openDialog = (id: number | null = null) => {
   incomeId.value = id;

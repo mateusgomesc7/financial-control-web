@@ -27,6 +27,7 @@
             v-model="members"
             :loading="membersStore.loading"
             :items="membersStore.members"
+            clearable
             label="Membros"
             variant="outlined"
             item-title="name"

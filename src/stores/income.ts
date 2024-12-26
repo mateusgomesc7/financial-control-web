@@ -11,14 +11,25 @@ export const useIncomesStore = defineStore("incomes", () => {
   const loadingAll = ref(false);
   const loadingById = ref(false);
   const loadingForm = ref(false);
+  const search = ref("");
+  const nameSearch = ref("");
+
+  watch(nameSearch, () => {
+    search.value = String(Date.now());
+  });
 
   const getAllIncomes = async ({
     page = 1,
     itemsPerPage = 10,
   } = {}): Promise<void> => {
     loadingAll.value = true;
+    console.log("search", search);
     try {
-      const params = { page, per_page: itemsPerPage };
+      const params = {
+        page,
+        per_page: itemsPerPage,
+        ...(nameSearch.value && { name: nameSearch.value }),
+      };
       const response = await $api.income.getAll(params);
       if (response) incomes.value = response;
     } finally {
@@ -91,6 +102,8 @@ export const useIncomesStore = defineStore("incomes", () => {
     loadingAll,
     loadingById,
     loadingForm,
+    search,
+    nameSearch,
     getAllIncomes,
     getIncomeById,
     createIncome,
