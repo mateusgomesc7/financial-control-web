@@ -23,7 +23,6 @@ export const useIncomesStore = defineStore("incomes", () => {
     itemsPerPage = 10,
   } = {}): Promise<void> => {
     loadingAll.value = true;
-    console.log("search", search);
     try {
       const params = {
         page,

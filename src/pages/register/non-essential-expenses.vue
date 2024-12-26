@@ -1,26 +1,26 @@
 <template>
   <div>
-    <EssentialExpensesFormModal
-      :dialog-show="essentialExpenseDialog"
-      :expense-id="essentialExpenseId"
-      @update:show="essentialExpenseDialog = false"
+    <NonEssentialExpensesFormModal
+      :dialog-show="nonEssentialExpenseDialog"
+      :expense-id="nonEssentialExpenseId"
+      @update:show="nonEssentialExpenseDialog = false"
     />
     <UtilsConfirmationModal
       :dialog-show="deleteDialog"
       type="error"
-      title="Deletar Despensa Essencial"
+      title="Deletar Despensa Não Essencial"
       question="Tem certeza que deseja deletar essa despesa?"
       @update:show="deleteDialog = false"
-      @yes="deleteEssentialExpense(essentialExpenseId)"
+      @yes="deleteNonEssentialExpense(nonEssentialExpenseId)"
     />
-    <h1 class="mb-4 text-primary">Despesas Essenciais</h1>
+    <h1 class="mb-4 text-primary">Despesas Não Essenciais</h1>
     <v-card class="pa-4">
       <v-card-title class="d-flex justify-space-between">
         <v-text-field
-          v-model="essentialExpenseStore.nameSearch"
+          v-model="nonEssentialExpenseStore.nameSearch"
           append-inner-icon="mdi-magnify"
           density="compact"
-          label="Pesquisar despesa essencial"
+          label="Pesquisar despesa não essencial"
           variant="outlined"
           max-width="400"
           clearable
@@ -39,17 +39,17 @@
       <v-card-text>
         <v-data-table-server
           v-model:items-per-page="
-            essentialExpenseStore.essentialExpenses.pagination.per_page
+            nonEssentialExpenseStore.nonEssentialExpenses.pagination.per_page
           "
           :headers="headers"
-          :items="essentialExpenseStore.essentialExpenses.items"
+          :items="nonEssentialExpenseStore.nonEssentialExpenses.items"
           :items-length="
-            essentialExpenseStore.essentialExpenses.pagination.total ?? 0
+            nonEssentialExpenseStore.nonEssentialExpenses.pagination.total ?? 0
           "
-          :loading="essentialExpenseStore.loadingAll"
-          :search="essentialExpenseStore.search"
+          :loading="nonEssentialExpenseStore.loadingAll"
+          :search="nonEssentialExpenseStore.search"
           disable-sort
-          @update:options="essentialExpenseStore.getAllEssentialExpenses"
+          @update:options="nonEssentialExpenseStore.getAllNonEssentialExpenses"
         >
           <template #[`item.member`]="{ item }">
             {{ item.member.name }}
@@ -74,10 +74,10 @@
 </template>
 
 <script setup lang="ts">
-const essentialExpenseStore = useEssentialExpensesStore();
-const essentialExpenseDialog = ref(false);
+const nonEssentialExpenseStore = useNonEssentialExpensesStore();
+const nonEssentialExpenseDialog = ref(false);
 const deleteDialog = ref(false);
-const essentialExpenseId = ref<number | null>(null);
+const nonEssentialExpenseId = ref<number | null>(null);
 
 const headers = ref([
   { title: "Nome", key: "name", align: "start", sortable: false },
@@ -89,19 +89,19 @@ const headers = ref([
 ]);
 
 const openDialog = (id: number | null = null) => {
-  essentialExpenseId.value = id;
-  essentialExpenseDialog.value = true;
+  nonEssentialExpenseId.value = id;
+  nonEssentialExpenseDialog.value = true;
 };
 
 const openDeleteDialog = (id: number) => {
-  essentialExpenseId.value = id;
+  nonEssentialExpenseId.value = id;
   deleteDialog.value = true;
 };
 
-const deleteEssentialExpense = async (id: number | null) => {
+const deleteNonEssentialExpense = async (id: number | null) => {
   if (!id) return;
 
-  await essentialExpenseStore.deleteEssentialExpense(id);
-  essentialExpenseId.value = null;
+  await nonEssentialExpenseStore.deleteNonEssentialExpense(id);
+  nonEssentialExpenseId.value = null;
 };
 </script>

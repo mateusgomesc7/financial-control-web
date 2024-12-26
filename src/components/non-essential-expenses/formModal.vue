@@ -5,7 +5,10 @@
     persistent
     @update:model-value="handleClose"
   >
-    <v-card :title="dialogTitle" :loading="essentialExpensesStore.loadingById">
+    <v-card
+      :title="dialogTitle"
+      :loading="nonEssentialExpensesStore.loadingById"
+    >
       <v-card-text>
         <v-form ref="form">
           <v-text-field
@@ -65,7 +68,7 @@ const props = defineProps({
   },
 });
 const membersStore = useMemberStore();
-const essentialExpensesStore = useEssentialExpensesStore();
+const nonEssentialExpensesStore = useNonEssentialExpensesStore();
 
 const form = ref();
 const dialogTitle = ref("");
@@ -87,10 +90,10 @@ watch(
     if (newVal) {
       loadMembers();
       if (props.expenseId) {
-        dialogTitle.value = "Editar despesa essencial";
+        dialogTitle.value = "Editar despesa não essencial";
         loadEssentialExpense();
       } else {
-        dialogTitle.value = "Adicionar despesa essencial";
+        dialogTitle.value = "Adicionar despesa não essencial";
       }
     }
   }
@@ -105,12 +108,12 @@ const handleSave = async () => {
       id_member_fk: members.value,
     };
     if (props.expenseId) {
-      await essentialExpensesStore.updateEssentialExpense(
+      await nonEssentialExpensesStore.updateNonEssentialExpense(
         props.expenseId,
         payload
       );
     } else {
-      await essentialExpensesStore.createEssentialExpense(payload);
+      await nonEssentialExpensesStore.createNonEssentialExpense(payload);
     }
     handleClose();
   }
@@ -133,9 +136,8 @@ const loadMembers = async () => {
 };
 
 const loadEssentialExpense = async () => {
-  const essentialExpense = await essentialExpensesStore.getEssentialExpenseById(
-    props.expenseId
-  );
+  const essentialExpense =
+    await nonEssentialExpensesStore.getNonEssentialExpenseById(props.expenseId);
   if (!essentialExpense) return;
 
   name.value = essentialExpense.name;
