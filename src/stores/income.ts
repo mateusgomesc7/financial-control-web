@@ -90,8 +90,11 @@ export const useIncomesStore = defineStore("incomes", () => {
     loadingForm.value = true;
     try {
       const response = await $api.income.delete(id);
-      if (response)
+      if (response) {
         incomes.value.items = incomes.value.items.filter((i) => i.id !== id);
+        incomes.value.pagination.total =
+          (incomes.value.pagination.total ?? 0) - 1;
+      }
     } finally {
       loadingForm.value = false;
     }
